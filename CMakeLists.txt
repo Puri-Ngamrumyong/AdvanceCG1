@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 3.0)
-cmake_policy(VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
+cmake_policy(VERSION 3.5)
 
 project(LearnOpenGL)
 
@@ -82,6 +82,7 @@ set(1.getting_started
     3.1.shaders_uniform
     3.2.shaders_interpolation
     3.3.shaders_class
+    3.3.shaders_class_assignment1
     4.1.textures
     4.2.textures_combined
     4.4.textures_exercise2
