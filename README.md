@@ -8,3 +8,7 @@ RGB Arrow the traiangle color will change by time R->G->B.
 # Controls:
 
 Press A and D to rotate the circle left and right.
+
+# Path:
+
+Path : AdvanceCG1\src\1.getting_started\3.3.shaders_class_assignment1
