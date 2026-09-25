@@ -15,6 +15,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 float Invert = 0.0f;
+float BlackWhite = 0.0f;
 
 int main()
 {
@@ -136,6 +137,7 @@ int main()
         // render container
         ourShader.use();
         ourShader.setFloat("invert", Invert);
+        ourShader.setFloat("blackWhite", BlackWhite);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -163,7 +165,7 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
+    //Invert
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
         Invert -= 0.01f;
@@ -175,6 +177,19 @@ void processInput(GLFWwindow *window)
         Invert += 0.01f;
         if (Invert > 1.0f)
             Invert = 1.0f;
+    }
+	//BlackWhite
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        BlackWhite -= 0.01f;
+        if (BlackWhite < 0.0f)
+            BlackWhite = 0.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+        BlackWhite += 0.01f;
+        if (BlackWhite > 1.0f)
+            BlackWhite = 1.0f;
     }
 }
 
