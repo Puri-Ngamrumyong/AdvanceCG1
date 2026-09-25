@@ -1,3 +1,4 @@
+## All assignments are done with same git project. The path of each assignment is mentioned below.
 # Assignment 1
 youtube : https://youtu.be/FYIZppwB438
 
@@ -12,3 +13,23 @@ Press A and D to rotate the circle left and right.
 # Path:
 
 Path : AdvanceCG1\src\1.getting_started\3.3.shaders_class_assignment1
+
+
+
+# Assignment 2
+youtube : https://youtu.be/jDM6m1S0vSQ
+
+Photo Filter
+Invert Color Filter : control by using A & D keys.
+Black & White Filter(Greyscale) : control by using W & S keys.
+
+
+# Path:
+
+Path : AdvanceCG1\src\1.getting_started\4.1.textures
+
+# Reference formular :
+
+Invert Color: https://www.quora.com/How-exactly-does-color-inversion-work
+BlackWhite(GreyScale) : https://en.wikipedia.org/wiki/Grayscale
+How to use it : https://learnopengl.com/Advanced-OpenGL/Framebuffers
