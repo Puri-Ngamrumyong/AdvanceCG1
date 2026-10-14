@@ -154,7 +154,10 @@ int main()
     }
     */
 
-    for (int ii = 0; ii < 7; ii++) {
+	//start at bottom left corner
+    // (Prismarine_Bricks)
+    ////////// Pillar Start loop 
+    for (int ii = 0; ii < 7; ii++) {//Back pillar (7)
         //Based Pillar(1 only) 4x4x5
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -165,6 +168,53 @@ int main()
             }
         }
     }
+	for (int ii = 1; ii < 7; ii++) {//Left pillar (6)
+        //Based Pillar(1 only) 4x4x5
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 5; k++) {
+                    cubePositions.push_back(glm::vec3(i , k, j+(ii*9)));
+                    countBrick++;
+                }
+            }
+        }
+    }
+	for (int ii = 1; ii < 7; ii++) {//Right pillar (6)
+        //Based Pillar(1 only) 4x4x5
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 5; k++) {
+                    cubePositions.push_back(glm::vec3(i + (6 * 9), k, j+(ii*9)));
+                    countBrick++;
+                }
+            }
+        }
+	}
+
+    for(int ii = 1; ii < 3; ii++) {//Front pillar Left
+        //Based Pillar(1 only) 4x4x5
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 5; k++) {
+                    cubePositions.push_back(glm::vec3(i + (ii * 9), k, j + (6 * 9)));
+                    countBrick++;
+                }
+            }
+        }
+	}
+    for(int ii = 6; ii > 3; ii--) {//Front pillar Right
+        //Based Pillar(1 only) 4x4x5
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 5; k++) {
+                    cubePositions.push_back(glm::vec3(i + (ii * 9), k, j + (6 * 9)));
+                    countBrick++;
+                }
+            }
+        }
+	}
+    ///////////////////////////End pillar //start at 0,0,0 end at 58,4,58
+
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -364,14 +414,27 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            camera.ProcessKeyboard(FORWARD, deltaTime*10);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            camera.ProcessKeyboard(BACKWARD, deltaTime*10);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            camera.ProcessKeyboard(LEFT, deltaTime*10);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            camera.ProcessKeyboard(RIGHT, deltaTime*10);
+    }
+    else {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            camera.ProcessKeyboard(FORWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            camera.ProcessKeyboard(BACKWARD, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            camera.ProcessKeyboard(LEFT, deltaTime);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            camera.ProcessKeyboard(RIGHT, deltaTime);
+    }
+        
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
