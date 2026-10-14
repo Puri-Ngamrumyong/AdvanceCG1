@@ -33,6 +33,7 @@ float lastFrame = 0.0f;
 using namespace std;
 
 int countBrick = 0;
+int countPrismarine = 0;
 
 int main()
 {
@@ -351,6 +352,19 @@ int main()
             }
         }
     }
+    //j36->20//Top pyramid
+    for (int k = 17; k < 21; k++) {
+        for (int i = 21 + k - 17; i < 37 - k + 17; i++) {
+            for (int j = 36 - k + 17; j > 20 + k - 17; j--) {
+                if (i > 21 + k - 17 && i < 36 - k + 17 && j > 21 + k - 17 && j < 36 - k + 17) {//make no block
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
     //Back Wall
     for(int k = 6; k < 9; k++) {
         for (int i = 1+k-6; i < 57-k+6; i++) {
@@ -385,7 +399,7 @@ int main()
             }
         }
     }
-    for (int k = 13; k < 18; k++) {
+    for (int k = 13; k < 18; k++) {//Back Fill Almost Top pyramid
         for (int i = 14 + k - 13; i < 44 - k + 13; i++) {
             for (int j = 14 + k - 13; j < 21 - k + 13; j++) {
                 cubePositions.push_back(glm::vec3(i, k, j));
@@ -408,6 +422,57 @@ int main()
             }
         }
     }
+    //End(Prismarine_Bricks)
+    //Start(Prismarine)
+    for (int k = 8; k < 9; k++) {//Floor in mid left 
+        for (int i = 4; i < 21; i++) {
+            for (int j = 4; j < 54; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 8; k < 9; k++) {//Floor in mid right 
+        for (int i = 37; i < 54; i++) {
+            for (int j = 4; j < 54; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 12; k < 13; k++) {//Floor in small left pyramid
+        for (int i = 11; i < 14; i++) {
+            for (int j = 4; j < 47; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 12; k < 13; k++) {//Floor in small right pyramid
+        for (int i = 44; i < 47; i++) {
+            for (int j = 4; j < 47; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 12; k < 13; k++) {//Floor in midBackCenter pyramid
+        for (int i = 15; i < 43; i++) {
+            for (int j = 4; j < 35; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 20; k < 21; k++) {//Floor in top pyramid
+        for (int i = 25; i < 33; i++) {
+            for (int j = 25; j < 33; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    //End(Prismarine)
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -506,7 +571,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, textures[0]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
-        for (unsigned int i = 0; i < countBrick; i++)
+        for (int i = 0; i < countBrick; i++)
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f);
@@ -517,13 +582,13 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        /*
+        
         // line 2: Prismarine
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[1]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[1]);
-        for (unsigned int i = 5; i < 10; i++)
+        for (int i = countBrick; i < countBrick + countPrismarine; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
@@ -533,13 +598,13 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
+        /*
         // line 3: Dark Prismarine
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[2]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[2]);
-        for (unsigned int i = 10; i < 15; i++)
+        for (int i = 10; i < 15; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
@@ -555,7 +620,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, textures[3]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[3]);
-        for (unsigned int i = 15; i < 20; i++)
+        for (int i = 15; i < 20; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
@@ -571,7 +636,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, textures[4]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[4]);
-        for (unsigned int i = 20; i < 25; i++)
+        for (int i = 20; i < 25; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
