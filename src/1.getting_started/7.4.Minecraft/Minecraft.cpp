@@ -214,7 +214,64 @@ int main()
         }
 	}
     ///////////////////////////End pillar //start at 0,0,0 end at 58,4,58
+    //////////////////////////Door&Base
+    bool ShiftUp = true;
+	int doorShift = 1;
+    for (int i = 0; i < 58; i++) {
+        for (int j = 0; j < 58; j++) {
+            for(int k = 5; k < 6; k++) {
+                if (i > 24 && i < 33 && j>36 && j < 58) {
+                    
+                }
+                else if (i > 25 && i < 29 && j==36) {
+                    cubePositions.push_back(glm::vec3(i, k+doorShift, j));
+                    countBrick++;
+					doorShift++;
+                }
+                else if (i > 28 && i < 32 && j == 36) {
+                    cubePositions.push_back(glm::vec3(i, k + doorShift-1, j));
+                    countBrick++;
+					doorShift--;
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+			}
+        }
+    }
+    ///////////////////////End Door&Base
+    // SidePyramid
+    ///////////////////////////StartLeft Pyramid
+    for (int k = 6; k < 9; k++) {
+        for (int i = 1+k-6; i < 24-k+6; i++) {
+            for (int j = 1+k-6; j < 57-k+6; j++) {
+                if (i > 3 && i < 21 && j > 3 && j < 54) {
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
 
+                
+            }
+        }
+    }
+    ///////////////////////////StartRight Pyramid
+    for (int k = 6; k < 9; k++) {
+        for (int i = 34 + k - 6; i < 57 - k + 6; i++) {
+            for (int j = 1 + k - 6; j < 57 - k + 6; j++) {
+                if (i > 36 && i < 54 && j > 3 && j < 54) {
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
+    
+    
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
