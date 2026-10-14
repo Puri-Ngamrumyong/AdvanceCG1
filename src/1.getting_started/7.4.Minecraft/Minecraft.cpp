@@ -385,7 +385,29 @@ int main()
             }
         }
     }
-}
+    for (int k = 13; k < 18; k++) {
+        for (int i = 14 + k - 13; i < 44 - k + 13; i++) {
+            for (int j = 14 + k - 13; j < 21 - k + 13; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countBrick++;
+            }
+        }
+    }
+    }
+    //Front Top
+    for (int k = 13; k < 17; k++) {
+        for (int i = 14; i < 44; i++) {
+            for (int j = 36; j > 17; j--) {
+                if ((k == 16 && ((i >= 17 && i <= 20) || (i >= 37 && i <= 40))) || //flat tops
+                    (k == 15 && (i == 16 || i == 41)) ||                             //step 3
+                    (k == 14 && (i == 15 || i == 42)) ||                             //step 2
+                    (k == 13 && (i == 14 || i == 43))) {                             //step 1 (bottom)
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
