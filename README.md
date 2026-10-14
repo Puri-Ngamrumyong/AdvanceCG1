@@ -16,7 +16,7 @@ Path : AdvanceCG1\src\1.getting_started\3.3.shaders_class_assignment1
 
 
 
-# Assignment 2
+# HW01 procedural modeling
 youtube : https://youtu.be/jDM6m1S0vSQ
 
 
@@ -36,3 +36,22 @@ Path : AdvanceCG1\src\1.getting_started\4.1.textures
 Invert Color: https://www.quora.com/How-exactly-does-color-inversion-work
 BlackWhite(GreyScale) : https://en.wikipedia.org/wiki/Grayscale
 How to use it : https://learnopengl.com/Advanced-OpenGL/Framebuffers
+
+
+
+
+# HW02: Pyramid of boxes
+youtube : https://youtu.be/VWI5WOkLXDA
+
+Pyramid of boxes with camera movement and rotation. The camera can move around the scene and rotate to view the pyramid from different angles.
+The pyramid is made up of boxes that are stacked on top of each other to form a pyramid shape.
+Total boxes is 55 boxes. The pyramid is made up of 5 layers in x y z axis.
+## Controls:
+
+use W A S D keys to move the camera around the scene.
+use mouse to look around the scene.
+
+
+## Path:
+
+Path : AdvanceCG1\src\1.getting_started\7.4.canera__class
