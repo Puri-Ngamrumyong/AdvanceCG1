@@ -246,7 +246,7 @@ int main()
     for (int k = 6; k < 9; k++) {
         for (int i = 1+k-6; i < 24-k+6; i++) {
             for (int j = 1+k-6; j < 57-k+6; j++) {
-                if (i > 3 && i < 21 && j > 3 && j < 54) {
+                if (i > 3 && i < 21 && j > 3 && j < 54) {//make no block
                 }
                 else {
                     cubePositions.push_back(glm::vec3(i, k, j));
@@ -257,11 +257,10 @@ int main()
             }
         }
     }
-    ///////////////////////////StartRight Pyramid
-    for (int k = 6; k < 9; k++) {
-        for (int i = 34 + k - 6; i < 57 - k + 6; i++) {
-            for (int j = 1 + k - 6; j < 57 - k + 6; j++) {
-                if (i > 36 && i < 54 && j > 3 && j < 54) {
+    for (int k = 9; k < 13; k++) {//small left
+        for (int i = 7 + k - 9; i < 18 - k + 9; i++) {
+            for (int j = 3; j < 51 - k + 9; j++) {
+                if (i > 7 + k - 9 && i < 17 - k + 9 && j > 3 && j < 50 - k + 9) {//make no block
                 }
                 else {
                     cubePositions.push_back(glm::vec3(i, k, j));
@@ -270,7 +269,31 @@ int main()
             }
         }
     }
-    
+    ///////////////////////////StartRight Pyramid
+    for (int k = 6; k < 9; k++) {
+        for (int i = 34 + k - 6; i < 57 - k + 6; i++) {
+            for (int j = 1 + k - 6; j < 57 - k + 6; j++) {
+				if (i > 36 && i < 54 && j > 3 && j < 54) {//make no block
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
+    for (int k = 9; k < 13; k++) {
+		for (int i = 40 + k - 9; i < 51 - k + 9; i++) {//small right
+            for (int j = 3; j < 51 - k + 9; j++) {
+                if (i > 40 + k - 9 && i < 50 - k + 9 && j > 3 && j < 50 - k + 9) {//make no block
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
     
 
     unsigned int VBO, VAO;
