@@ -34,7 +34,7 @@ using namespace std;
 
 int countBrick = 0;
 int countPrismarine = 0;
-
+int countDark = 0;
 int main()
 {
 
@@ -527,6 +527,24 @@ int main()
         }
     }
     //End(Prismarine)
+    //Start(Dark Prismarine)
+    for (int k = 10; k < 17; k++) {//Front wall pattern
+        for (int i = 15; i < 43; i++) {
+            int j = 37;
+            if ((k == 16 && (i == 22 || i == 25 || i == 28 || i == 29 || i == 32 || i == 35)) ||
+                (k == 15 && (i == 23 || i == 26 || i == 31 || i == 34)) ||
+                (k == 14 && (i == 24 || i == 27 || i == 30 || i == 33)) ||
+                (k == 13 && (i == 25 || i == 28 || i == 29 || i == 32)) ||
+                (k == 12 && (i == 26 || i == 31)) ||
+                (k == 11 && (i == 27 || i == 30)) ||
+                (k == 10 && (i == 28 || i == 29)) ||
+                ((k == 12 || k == 13) && (i == 18 || i == 20 || i == 22 || i == 35 || i == 37 || i == 39))) {//side windows
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countDark++;
+            }
+        }
+    }
+    //End(Dark Prismarine)
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -652,13 +670,13 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        /*
+        
         // line 3: Dark Prismarine
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[2]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[2]);
-        for (int i = 10; i < 15; i++)
+        for (int i = countBrick + countPrismarine; i < countBrick + countPrismarine + countDark; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
@@ -668,7 +686,7 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
+        /*
         // line 4: Sea Lantern
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[3]);
