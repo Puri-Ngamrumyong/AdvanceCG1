@@ -269,6 +269,7 @@ int main()
             }
         }
     }
+    
     for (int k = 9; k < 10; k++) {//Detail on mid left pyramid
     for (int i = 5; i < 20; i++) {
         for (int j = 5; j < 53; j++) {
@@ -284,6 +285,18 @@ int main()
             }
         }
     }
+    }
+    for (int k = 13; k < 14; k++) {//Detail on top small left pyramid
+        for (int i = 12; i < 13; i++) {
+            for (int j = 14; j < 46; j++) {
+                if (j % 2 == 0) {//space along z
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
     }
     ///////////////////////////StartRight Pyramid
     for (int k = 6; k < 9; k++) {
@@ -326,7 +339,53 @@ int main()
             }
         }
     }
-
+    for (int k = 13; k < 14; k++) {//Detail on top small right pyramid
+        for (int i = 45; i < 46; i++) {
+            for (int j = 14; j < 46; j++) {
+                if (j % 2 == 0) {//space along z
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
+    //Back Wall
+    for(int k = 6; k < 9; k++) {
+        for (int i = 1+k-6; i < 57-k+6; i++) {
+            for (int j = 1+k-6; j < 4; j++) {
+                if (i > 24 && i < 33 && j>36 && j < 58) {
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+	}
+    for (int k = 8; k < 13; k++) {
+        for (int i = 15 ; i<43; i++) {
+            
+                cubePositions.push_back(glm::vec3(i, k, 3));
+                countBrick++;
+            
+        }
+    }
+    //Back Detail
+    for (int k = 13; k < 17; k++) {
+    for (int i = 12; i < 46; i++) {
+        for (int j = 5; j < 13; j++) {
+            if ((k == 16 && (j == 8 || j == 9)) ||                       //top
+                (k == 15 && (j == 7 || j == 10)) ||                      //2nd row
+                (k == 14 && (j == 5 || j == 6 || j == 11 || j == 12)) || //3rd row
+                (k == 13 && (j == 5 || j == 7 || j == 10 || j == 12))) { //bottom
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countBrick++;
+            }
+        }
+    }
+}
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
