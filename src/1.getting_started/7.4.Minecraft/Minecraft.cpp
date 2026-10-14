@@ -35,6 +35,7 @@ using namespace std;
 int countBrick = 0;
 int countPrismarine = 0;
 int countDark = 0;
+int countSea=0;
 int main()
 {
 
@@ -423,6 +424,20 @@ int main()
             }
         }
     }
+    for (int k = 6; k < 11; k++) {//Front arch
+        for (int i = 22; i < 36; i++) {
+            for (int j = 52; j > 38; j--) {
+                if ((52 - j) % 4 == 0 && (
+                    (k == 10 && i >= 26 && i <= 31) ||                                 //top
+                    (k == 9 && (i == 25 || i == 32)) ||                                //step
+                    (k == 8 && ((i >= 22 && i <= 24) || (i >= 33 && i <= 35))) ||      //shoulders
+                    ((k == 6 || k == 7) && (i == 24 || i == 33)))) {                   //legs
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
     //End(Prismarine_Bricks)
     //Start(Prismarine)
     for (int k = 8; k < 9; k++) {//Floor in mid left 
@@ -545,6 +560,19 @@ int main()
         }
     }
     //End(Dark Prismarine)
+	//Start(Sea Lantern)
+    for (int k = 9; k < 10; k++) {//Front arch lanterns
+        for (int i = 26; i < 32; i++) {
+            for (int j = 52; j > 40; j--) {
+                if ((52 - j) % 4 == 0 && (i == 26 || i == 31)) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countSea++;
+                }
+            }
+        }
+    }
+	//end(Sea Lantern)
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -686,13 +714,13 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        /*
+        
         // line 4: Sea Lantern
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[3]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[3]);
-        for (int i = 15; i < 20; i++)
+        for (int i = countBrick + countPrismarine + countDark; i < countBrick + countPrismarine + countDark + countSea; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions.at(i));
@@ -702,7 +730,7 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
+        /*
         // line 5: Furnace
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[4]);
