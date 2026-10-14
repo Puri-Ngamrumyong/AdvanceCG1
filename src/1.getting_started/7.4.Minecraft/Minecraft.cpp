@@ -388,17 +388,18 @@ int main()
     }
     //Back Detail
     for (int k = 13; k < 17; k++) {
-    for (int i = 12; i < 46; i++) {
-        for (int j = 5; j < 13; j++) {
-            if ((k == 16 && (j == 8 || j == 9)) ||                       //top
-                (k == 15 && (j == 7 || j == 10)) ||                      //2nd row
-                (k == 14 && (j == 5 || j == 6 || j == 11 || j == 12)) || //3rd row
-                (k == 13 && (j == 5 || j == 7 || j == 10 || j == 12))) { //bottom
-                cubePositions.push_back(glm::vec3(i, k, j));
-                countBrick++;
+        for (int i = 12; i < 46; i++) {
+            for (int j = 5; j < 13; j++) {
+                if ((i == 12 || i == 18 || i == 24 || i == 33 || i == 39 || i == 45) && ( //arch positions
+                    (k == 16 && (j == 8 || j == 9)) ||                       //top
+                    (k == 15 && (j == 7 || j == 10)) ||                      //2nd row
+                    (k == 14 && (j == 5 || j == 6 || j == 11 || j == 12)) || //3rd row
+                    (k == 13 && (j == 5 || j == 7 || j == 10 || j == 12)))) { //bottom
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
             }
         }
-    }
     for (int k = 13; k < 18; k++) {//Back Fill Almost Top pyramid
         for (int i = 14 + k - 13; i < 44 - k + 13; i++) {
             for (int j = 14 + k - 13; j < 21 - k + 13; j++) {
@@ -469,6 +470,59 @@ int main()
             for (int j = 25; j < 33; j++) {
                 cubePositions.push_back(glm::vec3(i, k, j));
                 countPrismarine++;
+            }
+        }
+    }
+    for (int k = 16; k < 17; k++) {//Floor in top pyramid
+        for (int i = 20; i < 38; i++) {
+            for (int j = 18; j < 32; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 13; k < 17; k++) {//Fill front face of Front Top
+        for (int i = 15; i < 43; i++) {
+            int j = 36;
+            if ((k == 13 && i >= 15 && i <= 42) ||   //inside step 1
+                (k == 14 && i >= 16 && i <= 41) ||   //inside step 2
+                (k == 15 && i >= 17 && i <= 40) ||   //inside step 3
+                (k == 16 && i >= 21 && i <= 36)) {   //gap between flat tops
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int k = 6; k < 13; k++) {//Fill front face down
+        for (int i = 15; i < 43; i++) {
+            int j = 36;
+            if (k <= 8 && (i <= 29 - k || i >= 28 + k)) {//big pyramid wall or inside it
+            }
+            else if (k >= 9 && (i <= 26 - k || i >= 31 + k)) {//small pyramid wall or inside it
+            }
+            else if (k == 9 && (i == 19 || i == 38)) {//detail blocks already there
+            }
+            else if ((k == 6 && (i == 26 || i == 31)) || (k == 7 && (i == 27 || i == 30)) || (k == 8 && (i == 28 || i == 29))) {//door arch bricks
+            }
+            else if ((k == 6 && i >= 27 && i <= 30) || (k == 7 && (i == 28 || i == 29))) {//keep door opening
+            }
+            else {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countPrismarine++;
+            }
+        }
+    }
+    for (int i = 0; i < 58; i++) {//Fill Base (y = 4)
+        for (int j = 0; j < 58; j++) {
+            for (int k = 4; k < 5; k++) {
+                if (i > 24 && i < 33 && j > 36 && j < 58) {//door
+                }
+                else if ((i % 9 <= 3 && j % 9 <= 3) && (i < 4 || i > 53 || j < 4 || j > 53)) {//pillar space
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countPrismarine++;
+                }
             }
         }
     }
