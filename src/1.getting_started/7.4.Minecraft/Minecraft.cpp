@@ -269,6 +269,22 @@ int main()
             }
         }
     }
+    for (int k = 9; k < 10; k++) {//Detail on mid left pyramid
+    for (int i = 5; i < 20; i++) {
+        for (int j = 5; j < 53; j++) {
+            if (i > 5 && i < 19 && j > 5 && j < 52) {//make no block
+            }
+            else if ((i == 5 || i == 19) && j % 2 == 1) {//space on x sides
+            }
+            else if ((j == 5 || j == 52) && i % 2 == 0) {//space on z sides
+            }
+            else {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countBrick++;
+            }
+        }
+    }
+    }
     ///////////////////////////StartRight Pyramid
     for (int k = 6; k < 9; k++) {
         for (int i = 34 + k - 6; i < 57 - k + 6; i++) {
@@ -294,7 +310,22 @@ int main()
             }
         }
     }
-    
+    for (int k = 9; k < 10; k++) {//Detail on mid right pyramid
+        for (int i = 38; i < 53; i++) {
+            for (int j = 5; j < 53; j++) {
+                if (i > 38 && i < 52 && j > 5 && j < 52) {//make no block
+                }
+                else if ((i == 38 || i == 52) && j % 2 == 1) {//space on x sides
+                }
+                else if ((j == 5 || j == 52) && i % 2 == 1) {//space on z sides
+                }
+                else {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+            }
+        }
+    }
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
