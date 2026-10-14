@@ -366,6 +366,37 @@ int main()
             }
         }
     }
+    //toptop
+    for(int k = 19; k < 24; k++) {
+        for (int i = 25; i < 33; i++) {
+            for (int j = 25; j < 33; j++) {
+                if ( i == 32 && j == 25) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+                if (i == 25 && j == 25) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+                }
+                if (i == 25 && j == 32) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+				}
+                if (i == 32 && j == 32) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countBrick++;
+				}
+            }
+        }
+	}
+    for (int k = 24; k < 26; k++) {
+        for (int i = 26+k-24; i < 32-k+24; i++) {
+            for (int j = 26 + k - 24; j < 32 - k + 24; j++) {
+                cubePositions.push_back(glm::vec3(i, k, j));
+                countBrick++;
+            }
+        }
+    }
     //Back Wall
     for(int k = 6; k < 9; k++) {
         for (int i = 1+k-6; i < 57-k+6; i++) {
@@ -563,8 +594,30 @@ int main()
 	//Start(Sea Lantern)
     for (int k = 9; k < 10; k++) {//Front arch lanterns
         for (int i = 26; i < 32; i++) {
-            for (int j = 52; j > 40; j--) {
+            for (int j = 52; j > 38; j--) {
                 if ((52 - j) % 4 == 0 && (i == 26 || i == 31)) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countSea++;
+                }
+            }
+        }
+    }
+    for (int k = 23; k < 24; k++) {//Top corner lanterns
+        for (int i = 26; i < 33; i++) {
+            for (int j = 25; j < 33; j++) {
+                if (i == 31 && j == 26) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countSea++;
+                }
+                if (i == 26 && j == 26) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countSea++;
+                }
+                if (i == 26 && j == 31) {
+                    cubePositions.push_back(glm::vec3(i, k, j));
+                    countSea++;
+                }
+                if (i == 31 && j == 31) {
                     cubePositions.push_back(glm::vec3(i, k, j));
                     countSea++;
                 }
