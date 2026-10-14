@@ -22,7 +22,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 5.0f, 20.0f));// camPos
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -31,6 +31,8 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 using namespace std;
+
+int countBrick = 0;
 
 int main()
 {
@@ -151,11 +153,19 @@ int main()
         }
     }
     */
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            cubePositions.push_back(glm::vec3(i, 0, j));
+
+    for (int ii = 0; ii < 7; ii++) {
+        //Based Pillar(1 only) 4x4x5
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 5; k++) {
+                    cubePositions.push_back(glm::vec3(i+(ii*9), k, j));
+                    countBrick++;
+                }
+            }
         }
     }
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -254,7 +264,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, textures[0]);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textures[0]);
-        for (unsigned int i = 0; i < 5; i++)
+        for (unsigned int i = 0; i < countBrick; i++)
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f);
@@ -265,7 +275,7 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
+        /*
         // line 2: Prismarine
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures[1]);
@@ -329,7 +339,7 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-
+        */
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
