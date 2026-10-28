@@ -30,6 +30,9 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
+
+// lighting
+glm::vec3 lightPos(29.0f, 35.0f, 70.0f); // above, in front of the door
 using namespace std;
 
 int countBrick = 0;
@@ -81,52 +84,54 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader ourShader("7.4.camera.vs", "7.4.camera.fs");
+    Shader ourShader("1.colors.vs", "1.colors.fs");
+    Shader lightCubeShader("2.2.light_cube.vs", "2.2.light_cube.fs");
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
+    // set up vertex data (and buffer(s)) and configure vertex attributes/
     // ------------------------------------------------------------------
     float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.333f,
-         0.5f, -0.5f, -0.5f,  0.25f, 0.333f,
-         0.5f,  0.5f, -0.5f,  0.25f, 0.666f,
-         0.5f,  0.5f, -0.5f,  0.25f, 0.666f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.666f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.333f,
+        // positions          // texture coords  // normals
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.333f,      0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.25f, 0.333f,     0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.25f, 0.666f,     0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.25f, 0.666f,     0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 0.666f,      0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.333f,      0.0f,  0.0f, -1.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,
-         0.5f, -0.5f,  0.5f,  0.75f, 0.333f,
-         0.5f,  0.5f,  0.5f,  0.75f, 0.666f,
-         0.5f,  0.5f,  0.5f,  0.75f, 0.666f,
-        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,
-        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,
+        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,      0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.75f, 0.333f,     0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.75f, 0.666f,     0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.75f, 0.666f,     0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,      0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,      0.0f,  0.0f,  1.0f,
 
-        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,
-        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,
-        -0.5f, -0.5f, -0.5f,  0.25f, 0.333f,
-        -0.5f, -0.5f, -0.5f,  0.25f, 0.333f,
-        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,
-        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,
+        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,     -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.25f, 0.333f,    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.25f, 0.333f,    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.5f, 0.333f,     -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.5f, 0.666f,     -1.0f,  0.0f,  0.0f,
 
-         0.5f,  0.5f,  0.5f,  1.0f, 0.666f,
-         0.5f,  0.5f, -0.5f,  0.75f, 0.666f,
-         0.5f, -0.5f, -0.5f,  0.75f, 0.333f,
-         0.5f, -0.5f, -0.5f,  0.75f, 0.333f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.333f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.666f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.666f,      1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.75f, 0.666f,     1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.75f, 0.333f,     1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.75f, 0.333f,     1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.333f,      1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.666f,      1.0f,  0.0f,  0.0f,
 
-        -0.5f, -0.5f, -0.5f,  0.25f, 0.0f,
-         0.5f, -0.5f, -0.5f,  0.5f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.5f, 0.333f,
-         0.5f, -0.5f,  0.5f,  0.5f, 0.333f,
-        -0.5f, -0.5f,  0.5f,  0.25f, 0.333f,
-        -0.5f, -0.5f, -0.5f,  0.25f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.25f, 0.0f,       0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.5f, 0.0f,        0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.5f, 0.333f,      0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.5f, 0.333f,      0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.25f, 0.333f,     0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.25f, 0.0f,       0.0f, -1.0f,  0.0f,
 
-        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,
-         0.5f,  0.5f, -0.5f,  0.5f, 0.666f,
-         0.5f,  0.5f,  0.5f,  0.5f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.5f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.25f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,
+        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,     0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.5f, 0.666f,      0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.5f, 1.0f,        0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.5f, 1.0f,        0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.25f, 1.0f,       0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.25f, 0.666f,     0.0f,  1.0f,  0.0f,
     };
     // world space positions of our cubes
     /*
@@ -636,11 +641,24 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // texture coord attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    // normal attribute
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
+    unsigned int lightCubeVAO;
+    glGenVertexArrays(1, &lightCubeVAO);
+    glBindVertexArray(lightCubeVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // note that we update the lamp's position attribute's stride to reflect the updated buffer data
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
 
     // load and create a texture for each line of blocks
@@ -707,6 +725,9 @@ int main()
 
         // activate shader
         ourShader.use();
+        ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("lightPos", lightPos);
+        ourShader.setVec3("viewPos", camera.Position);
 
         // pass projection matrix to shader (note that in this case it could change every frame)
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -783,6 +804,17 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        // also draw the lamp object
+        lightCubeShader.use();
+        lightCubeShader.setMat4("projection", projection);
+        lightCubeShader.setMat4("view", view);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        lightCubeShader.setMat4("model", model);
+
+        glBindVertexArray(lightCubeVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
         /*
         // line 5: Furnace
         glActiveTexture(GL_TEXTURE0);
@@ -809,6 +841,7 @@ int main()
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &lightCubeVAO);
     glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
