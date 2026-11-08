@@ -55,3 +55,17 @@ use mouse to look around the scene.
 ## Path:
 
 Path : AdvanceCG1\src\1.getting_started\7.4.canera__class
+
+
+# HW03: Minecraft
+youtube : https://youtu.be/l1G9-t7FNAw
+
+## Controls:
+
+use W A S D keys to move the camera around the scene.
+use mouse to look around the scene.
+Press Shift while moving to speed up
+
+## Path:
+
+Path : AdvanceCG1\src\1.getting_started\7.4.Minecraft
