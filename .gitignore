@@ -1,4 +1,7 @@
 # ignores following folders
-bin/
+.vs/
+x64/
+Debug/
+Release/
 build/
-out/
+*.ipch
