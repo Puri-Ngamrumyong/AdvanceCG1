@@ -33,7 +33,8 @@ float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
 // lighting
-glm::vec3 lightPos(29.0f, 35.0f, 70.0f); // above, in front of the door
+glm::vec3 lightPos(29.0f, 35.0f, 70.0f); // white light
+glm::vec3 lightPos2(-29.0f, 35.0f, -12.0f); // blue light
 using namespace std;
 
 int countBrick = 0;
@@ -222,7 +223,7 @@ int main()
         }
 	}
     ///////////////////////////End pillar //start at 0,0,0 end at 58,4,58
-    //////////////////////////Door&Base
+    //////////////////////////Door&Base 
     bool ShiftUp = true;
 	int doorShift = 1;
     for (int i = 0; i < 58; i++) {
@@ -738,6 +739,12 @@ int main()
         ourShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
         ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
+        // light 2 (blue, behind the building)
+        ourShader.setVec3("light2.position", lightPos2);
+        ourShader.setVec3("light2.ambient", 0.0f, 0.0f, 0.1f);
+        ourShader.setVec3("light2.diffuse", 0.1f, 0.3f, 1.0f);
+        ourShader.setVec3("light2.specular", 0.1f, 0.3f, 1.0f);
+
         // material properties
         ourShader.setFloat("material.shininess", 64.0f);
 
@@ -829,11 +836,20 @@ int main()
         lightCubeShader.use();
         lightCubeShader.setMat4("projection", projection);
         lightCubeShader.setMat4("view", view);
+        glBindVertexArray(lightCubeVAO);
+
+        // lamp 1 (white)
+        lightCubeShader.setVec3("lampColor", 1.0f, 1.0f, 1.0f);
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, lightPos);
         lightCubeShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
-        glBindVertexArray(lightCubeVAO);
+        // lamp 2 (blue)
+        lightCubeShader.setVec3("lampColor", 0.1f, 0.3f, 1.0f);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos2);
+        lightCubeShader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         /*
         // line 5: Furnace
