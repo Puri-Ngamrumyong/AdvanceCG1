@@ -55,7 +55,7 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
+       
     // glfw window creation
     // --------------------
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -89,6 +89,7 @@ int main()
     // ------------------------------------
     Shader ourShader("1.colors.vs", "1.colors.fs");
     Shader lightCubeShader("2.2.light_cube.vs", "2.2.light_cube.fs");
+    Shader ourNewShader("1.model_loading.vs", "1.model_loading.fs");
 
 
     Model ourModel(FileSystem::getPath("resources/objects/backpack/backpack.obj"));
