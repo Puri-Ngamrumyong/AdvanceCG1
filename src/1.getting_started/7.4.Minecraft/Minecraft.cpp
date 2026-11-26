@@ -9,6 +9,7 @@
 #include <learnopengl/filesystem.h>
 #include <learnopengl/shader_m.h>
 #include <learnopengl/camera.h>
+#include <learnopengl/model.h>
 
 #include <iostream>
 #include <vector>
@@ -88,6 +89,9 @@ int main()
     // ------------------------------------
     Shader ourShader("1.colors.vs", "1.colors.fs");
     Shader lightCubeShader("2.2.light_cube.vs", "2.2.light_cube.fs");
+
+
+    Model ourModel(FileSystem::getPath("resources/objects/backpack/backpack.obj"));
 
     // set up vertex data (and buffer(s)) and configure vertex attributes/
     // ------------------------------------------------------------------
@@ -868,6 +872,15 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
         */
+        // render the loaded model
+        ourShader.use();
+        ourShader.setMat4("projection", projection);
+        ourShader.setMat4("view", view);
+        model = glm::translate(model, glm::vec3(50.0f, -10.0f, 50.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
+        ourShader.setMat4("model", model);
+        ourModel.Draw(ourShader);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
