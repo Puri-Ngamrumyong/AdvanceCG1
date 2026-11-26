@@ -69,3 +69,12 @@ Press Shift while moving to speed up
 ## Path:
 
 Path : AdvanceCG1\src\1.getting_started\7.4.Minecraft
+
+# HW 4: Lighting your scene
+youtube :
+
+From HW3 added 2 light source and specular map
+
+## Path:
+
+Path : AdvanceCG1\src\1.getting_started\7.4.Minecraft
